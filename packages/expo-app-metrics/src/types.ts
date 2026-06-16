@@ -457,6 +457,21 @@ export interface ExpoAppMetricsModuleType {
   getInactiveSessions(): Promise<DebugSession[]>;
 
   /**
+   * Reports an unhandled JavaScript error captured by the JS-side `global.ErrorUtils`
+   * handler, recorded natively as an `exception` log event following OpenTelemetry's
+   * exception conventions. Called by `installErrorHandler`; not intended to be called directly.
+   *
+   * @private This API is unstable and may change without notice.
+   */
+  reportError(error: {
+    source: string;
+    type?: string;
+    message: string;
+    stacktrace?: string;
+    isFatal: boolean;
+  }): void;
+
+  /**
    * @private This API is unstable and may change without notice.
    */
   addCustomMetricToSession(metric: Metric): Promise<void>;
